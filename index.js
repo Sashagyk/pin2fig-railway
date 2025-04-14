@@ -40,7 +40,10 @@ if (!jsonMatch || !jsonMatch[1]) {
       }
     }
 
-    res.json({ imageUrls });
+    res.json({
+  imageUrls,
+  debugHtml: html.slice(0, 1000)
+});
   } catch (err) {
     res.status(500).json({
       error: 'Failed to fetch or parse HTML',
