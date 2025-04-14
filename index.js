@@ -21,13 +21,13 @@ app.post('/extract-pins', async (req, res) => {
     });
 
     const jsonMatch = html.match(/<script id="__PWS_DATA__" type="application\/json">(.*?)<\/script>/);
-    if (!jsonMatch || !jsonMatch[1]) {
-      return res.status(200).json({
-        imageUrls: [],
-        error: 'PWS_DATA not found',
-        debugHtml: html.slice(0, 1500)
-      });
-    }
+if (!jsonMatch || !jsonMatch[1]) {
+  return res.status(200).json({
+    imageUrls: [],
+    error: 'PWS_DATA not found',
+    debugHtml: html.slice(0, 1500)
+  });
+}
 
     const json = JSON.parse(jsonMatch[1]);
     const pins = json?.props?.initialReduxState?.pins ?? {};
