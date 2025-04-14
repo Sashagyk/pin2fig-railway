@@ -16,7 +16,7 @@ app.post('/extract-pins', async (req, res) => {
       params: {
         api_key: API_KEY,
         url: pinterestUrl,
-        render_js: true
+        render_js: true,
         wait_for: '5000'
       }
     });
