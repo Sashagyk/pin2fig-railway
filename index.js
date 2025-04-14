@@ -8,7 +8,6 @@ app.use(cors());              // 3. активируем cors
 
 app.use(express.json()); 
 const axios = require('axios');
-const app = express();
 const PORT = process.env.PORT || 3000;
 
 const API_KEY = '90DI7UVSJVYM9AEIJ75ZPO4K870U8IZIW0O4FGSTXGV7XQIEZJJGTPMXAFQF2FKMW32GSZXLCDG0FORR'; // вставь сюда свой API ключ
