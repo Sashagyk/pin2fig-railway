@@ -1,9 +1,9 @@
 {
   "name": "pin2fig-scraper",
   "version": "1.0.0",
-  "main": "scrapingbee_server_ready.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node scrapingbee_server_ready.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "axios": "^1.6.7",
