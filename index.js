@@ -1,18 +1,12 @@
-
-// server.js
 const express = require('express');
-const cors = require('cors'); // 1. подключаем cors
-
-const app = express();        // 2. создаём express-приложение
-app.use(cors());              // 3. активируем cors
-
-app.use(express.json()); 
 const axios = require('axios');
-const PORT = process.env.PORT || 3000;
+const cors = require('cors');
 
-const API_KEY = '90DI7UVSJVYM9AEIJ75ZPO4K870U8IZIW0O4FGSTXGV7XQIEZJJGTPMXAFQF2FKMW32GSZXLCDG0FORR'; // вставь сюда свой API ключ
-
+const app = express();
+app.use(cors());
 app.use(express.json());
+
+const API_KEY = '90DI7UVSJVYM9AEIJ75ZPO4K870U8IZIW0O4FGSTXGV7XQIEZJJGTPMXAFQF2FKMW32GSZXLCDG0FORR';
 
 app.post('/extract-pins', async (req, res) => {
   const { pinterestUrl } = req.body;
@@ -26,9 +20,13 @@ app.post('/extract-pins', async (req, res) => {
       }
     });
 
-    const jsonMatch = html.match(/<script id="__PWS_DATA__" type="application\/json">(.*?)<\/script>/);
+    const jsonMatch = html.match(/<script id="__PWS_DATA__" type="application\\/json">(.*?)<\\/script>/);
     if (!jsonMatch || !jsonMatch[1]) {
-      return res.status(200).json({ imageUrls: [], note: 'no json block found' });
+      return res.status(200).json({
+        imageUrls: [],
+        error: 'PWS_DATA not found',
+        debugHtml: html.slice(0, 1500)
+      });
     }
 
     const json = JSON.parse(jsonMatch[1]);
@@ -44,10 +42,14 @@ app.post('/extract-pins', async (req, res) => {
 
     res.json({ imageUrls });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch from ScrapingBee', details: err.message });
+    res.status(500).json({
+      error: 'Failed to fetch or parse HTML',
+      details: err.message
+    });
   }
 });
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`ScrapingBee proxy running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
