@@ -1,8 +1,12 @@
 
 // server.js
 const express = require('express');
-const cors = require('cors');
-app.use(cors());
+const cors = require('cors'); // 1. подключаем cors
+
+const app = express();        // 2. создаём express-приложение
+app.use(cors());              // 3. активируем cors
+
+app.use(express.json()); 
 const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
